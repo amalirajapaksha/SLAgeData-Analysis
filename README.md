@@ -77,6 +77,5 @@ data(DISpop_by_FiveYearAgeGroup)
 It should be gratefully acknowledged that the **Department of Census and Statistics, Sri Lanka** has made census data publicly available.  
 The **SLpopData** package builds directly on their official datasets from the 2012 and 2024 censuses, transforming them into tidy formats to enable user‑friendly and reproducible demographic analysis.
 
-
-
+All Sri Lankan maps used in this project were drawn using the **Ceylon** R package developed by **Dr.Thiyanga Talagala**, which provides high‑quality spatial data and mapping tools tailored for Sri Lanka.
 
