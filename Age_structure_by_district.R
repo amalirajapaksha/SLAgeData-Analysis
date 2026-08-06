@@ -133,7 +133,7 @@ create_age_map <- function(data, age_group, year_value){
       ),
       drop = FALSE,
       na.translate = FALSE,
-      name = "Population (%)"
+      name = paste(age_group, "Population (%)")
     ) +
     labs(
       title = paste(year_value)

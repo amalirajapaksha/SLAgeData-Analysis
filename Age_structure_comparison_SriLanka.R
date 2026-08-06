@@ -2,11 +2,10 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(SLpopData)
-library(plotly)
 
 # Create country-level age structure by year
-country_age <- DISpop_by_FiveYearAgeGroup %>%
-  group_by(Year) %>%
+country_age <- DISpop_by_FiveYearAgeGroup |>
+  group_by(Year) |>
   summarise(
     Total = sum(Total, na.rm = TRUE),
     
@@ -30,12 +29,12 @@ country_age <- DISpop_by_FiveYearAgeGroup %>%
       na.rm = TRUE
     ),
     .groups = "drop"
-  ) %>%
+  ) |>
   pivot_longer(
     cols = c(Young, Working_Age, Elderly),
     names_to = "Age_Group",
     values_to = "Population"
-  ) %>%
+  ) |>
   mutate(
     Percentage = (Population / Total) * 100,
     Age_Group = factor(
@@ -61,8 +60,14 @@ p <- ggplot(
   )
 ) +
   geom_col(
-    position = position_dodge(width = 0.8),
+    position = position_dodge(width = 0.75),
     width = 0.7
+  ) +
+  geom_text(
+    aes(label = sprintf("%.1f%%", Percentage)),
+    position = position_dodge(width = 0.8),
+    vjust = -0.3,
+    size = 4
   ) +
   labs(
     title = "Age Structure Comparison of Sri Lanka: 2012 vs 2024",
@@ -72,10 +77,16 @@ p <- ggplot(
   ) +
   scale_fill_manual(
     values = c(
-      "2012" = "#F39C12",
-      "2024" = "#27AE60"
+      "2012" = "#fc8d62",
+      "2024" = "#66c2a5"
     )
   ) +
-  theme_minimal()
+  expand_limits(y = max(country_age$Percentage) * 1.1) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5
+    )
+  )
 
 p
