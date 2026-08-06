@@ -41,7 +41,7 @@ map_data <- DISpop_by_FiveYearAgeGroup |>
     )
   )
 
-unique(map_sf$Year)
+unique(map_data$Year)
 
 
 map_data <- map_data |>
