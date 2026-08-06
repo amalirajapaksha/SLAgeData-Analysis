@@ -7,19 +7,19 @@ library(SLpopData)
 
 
 # Create age group percentages
-map_data <- DISpop_by_FiveYearAgeGroup %>%
+map_data <- DISpop_by_FiveYearAgeGroup |>
   mutate(
-    Young (0-14) = Age_0_4 + Age_5_9 + Age_10_14,
+    Young = Age_0_4 + Age_5_9 + Age_10_14,
     
-    Working_Age (15-64) = Age_15_19 + Age_20_24 + Age_25_29 +
+    Working_Age = Age_15_19 + Age_20_24 + Age_25_29 +
       Age_30_34 + Age_35_39 + Age_40_44 +
       Age_45_49 + Age_50_54 + Age_55_59 +
       Age_60_64,
     
-    Elderly (65+) = Age_65_69 + Age_70_74 + Age_75_79 +
+    Elderly = Age_65_69 + Age_70_74 + Age_75_79 +
       Age_80_84 + Age_85_89 + Age_90_94 +
       Age_95_plus
-  ) %>%
+  ) |>
   select(
     District_Name,
     Year,
@@ -27,12 +27,12 @@ map_data <- DISpop_by_FiveYearAgeGroup %>%
     Young,
     Working_Age,
     Elderly
-  ) %>%
+  ) |>
   pivot_longer(
     cols = c(Young, Working_Age, Elderly),
     names_to = "Age_Group",
     values_to = "Population"
-  ) %>%
+  ) |>
   mutate(
     Percentage = Population / Total * 100,
     Year = factor(
@@ -44,7 +44,7 @@ map_data <- DISpop_by_FiveYearAgeGroup %>%
 unique(map_sf$Year)
 
 
-map_data <- map_data %>%
+map_data <- map_data |>
   mutate(
     DISTRICT = toupper(District_Name),
     DISTRICT = recode(
@@ -55,7 +55,7 @@ map_data <- map_data %>%
 
 
 
-map_data <- map_data %>%
+map_data <- map_data |>
   mutate(
     Percentage_Category = cut(
       Percentage,
@@ -74,8 +74,8 @@ map_data <- map_data %>%
 
 
 
-map_sf <- ceylon::district %>%
-  filter(DISTRICT != "[UNKNOWN]") %>%
+map_sf <- ceylon::district |>
+  filter(DISTRICT != "[UNKNOWN]") |>
   left_join(map_data, by = "DISTRICT")
 
 
@@ -102,11 +102,11 @@ create_age_map <- function(data, age_group, year_value){
     "50%+"
   )
   
-  plot_data <- data %>% 
+  plot_data <- data |>
     filter(
       Age_Group == age_group,
       Year == year_value
-    ) %>%
+    ) |>
     mutate(
       Percentage_Category = factor(
         Percentage_Category,
@@ -136,14 +136,13 @@ create_age_map <- function(data, age_group, year_value){
       name = "Population (%)"
     ) +
     labs(
-      title = paste(age_group, "-", year_value)
+      title = paste(year_value)
     ) +
     theme_void() +
     theme(
       plot.title = element_text(
         hjust = 0.5,
-        size = 14,
-        face = "bold"
+        size = 10
       ),
       legend.position = "right"
     )
@@ -190,7 +189,10 @@ elderly_2024 <- create_age_map(
 
 
 young_combined <- young_2012 + young_2024 +
-  plot_layout(guides = "collect") &
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    title = "District-wise Young (0–14) Population Comparison: 2012 vs. 2024"
+  ) +
   theme(
     legend.position = "right"
   )
@@ -201,7 +203,10 @@ young_combined
 
 
 working_combined <- working_2012 + working_2024 +
-  plot_layout(guides = "collect") &
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    title = "District-wise Working-Age (15–64) Population Comparison: 2012 vs. 2024"
+  ) +
   theme(
     legend.position = "right"
   )
@@ -213,7 +218,10 @@ working_combined
 
 
 elderly_combined <- elderly_2012 + elderly_2024 +
-  plot_layout(guides = "collect") &
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    title = "District-wise Elderly (65+) Population Comparison: 2012 vs. 2024"
+  ) +
   theme(
     legend.position = "right"
   )
