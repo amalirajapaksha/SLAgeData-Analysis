@@ -47,7 +47,7 @@ These visualizations highlight Sri Lanka’s demographic transition, emphasizing
 - **Social Opportunities**: Since there are fewer children, more resources can go into improving the quality of education. At the same time, more older people means new chances for community programs, family support systems, and industries that serve seniors. 
 - **Policy Innovation**: These changes in population give governments a chance to rethink pensions, jobs, and healthcare. Smart planning now can make systems stronger and more sustainable in the future.  
 
-These plots demonstrate how clear, accessible visualizations can guide evidence-based decision-making, support academic research, and inform public awareness campaigns.
+These plots demonstrate how clear, accessible visualizations can guide evidence-based decision-making, support academic research, and inform public awareness campaigns. In designing them, I used colour‑blind friendly palettes so everyone can read the plots clearly.
 
 ---
 
