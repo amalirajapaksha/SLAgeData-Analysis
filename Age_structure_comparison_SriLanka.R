@@ -50,6 +50,56 @@ country_age <- DISpop_by_FiveYearAgeGroup |>
   )
 
 
+
+
+# Plot - Population Counts
+p_count <- ggplot(
+  country_age,
+  aes(
+    x = Age_Group,
+    y = Population,
+    fill = Year
+  )
+) +
+  geom_col(
+    position = position_dodge(width = 0.75),
+    width = 0.7
+  ) +
+  geom_text(
+    aes(label = scales::comma(Population)),
+    position = position_dodge(width = 0.75),
+    vjust = -0.3,
+    size = 4
+  ) +
+  labs(
+    title = "Age Structure Comparison of Sri Lanka: 2012 vs 2024",
+    x = "Age Group",
+    y = "Population Count",
+    fill = "Year"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "2012" = "#fc8d62",
+      "2024" = "#66c2a5"
+    )
+  ) +
+  scale_y_continuous(
+    labels = scales::comma,
+    expand = expansion(mult = c(0, 0.1))
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      hjust = 0.5
+    )
+  )
+
+p_count
+
+
+
+
+
 # Plot
 p <- ggplot(
   country_age,
@@ -90,3 +140,5 @@ p <- ggplot(
   )
 
 p
+
+
