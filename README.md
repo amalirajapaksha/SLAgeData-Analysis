@@ -61,7 +61,7 @@ You can install the package directly from GitHub:
 install.packages("pak")
 pak::pak("amalirajapaksha/SLpopData")
 ```
-Once installed, load the package and access the datasets:
+Once installed, load the package and access the dataset:
 ``` r
 library(SLpopData)
 data(DISpop_by_FiveYearAgeGroup)
